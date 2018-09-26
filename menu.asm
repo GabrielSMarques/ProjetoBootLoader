@@ -7,9 +7,11 @@ Bricks db ' Bricks', 13
 iniciar db ' Iniciar Jogo', 13
 guia db ' Help', 13
 tituloGuia db '-- HELP --', 13
-introducao1 db 'Mova a plataforma para', 13
-introducao2 db 'Esmagar os Blocos!', 13
+introducao1 db 'Mova a plataforma para acertar', 13
+introducao2 db 'os Blocos que sao destruidos', 13
+introducao3 db 'em sequencia!', 13
 mecanica db '<-A      D->', 13
+surpresa db 'Surpresas podem acontecer!', 13
 
 start:
 	mov ah, 0   ;set display mode
@@ -66,7 +68,7 @@ telaRegras:
 	mov ah, 02h
 	mov bh, 00h
 	mov dh, 05h
-	mov dl, 09h
+	mov dl, 05h
 	int 10h
 	mov si, introducao1
 	call printString
@@ -74,9 +76,17 @@ telaRegras:
 	mov ah, 02h
 	mov bh, 00h
 	mov dh, 07h
-	mov dl, 0bh
+	mov dl, 06h
 	int 10h
 	mov si, introducao2
+	call printString
+
+	mov ah, 02h
+	mov bh, 00h
+	mov dh, 09h
+	mov dl, 0dh
+	int 10h
+	mov si, introducao3
 	call printString
 
 	mov ah, 02h
@@ -93,6 +103,14 @@ telaRegras:
 	mov dl, 0dh
 	int 10h
 	mov si, iniciar
+	call printString
+
+	mov ah, 02h
+	mov bh, 00h
+	mov dh, 11h
+	mov dl, 07h
+	int 10h
+	mov si, surpresa
 	call printString
 
 	esperaEnter:
