@@ -140,8 +140,6 @@ moveBall:
 		mov si, word[atual]
 		je .fimloopzao
 
-
-
 		mov si, word[atual]
 
 		lodsw
@@ -198,67 +196,9 @@ moveBall:
 		cmp bx, 0
 		jg .loopzao
 
-
-	mov word[atual], blocos
-	mov si, word[atual]
-	add si, 8
-	lodsw
-	cmp ax, 0
-	je .nada1
-
-	; mov si, word[atual]
-
-	; lodsw
-	; cmp cx, ax
-	; jl .nada1
-	; add si, 4
-	; add ax, word[si]
-	; cmp cx, ax
-	; jg .nada1
-
-	; mov si, word[atual]
-	; add si, 2
-	; lodsw
-	; cmp dx, ax
-	; jl .nada1
-	; add si, 2
-	; add ax, word[si]
-	; cmp dx, ax
-	; jg .nada1
-
-	; mov si, word[atual]	
-	; add si, 8
-	; mov word[si], 0
-	; push cx
-	; push dx
-	; 	mov si, word[atual]
-	; 	push ax
-	; 	mov ax, word[si]
-	; 	mov word[aux_x], ax
-	; 	add si, 2
-	; 	mov ax, word[si]
-	; 	mov word[aux_y], ax
-	; 	pop ax
-	; 	mov cx, word[aux_x]
-	; 	add cx, word[tam]
-	; 	.laco1:
-	; 		mov dx, word[aux_y]
-	; 		add dx, word[tam]
-	; 		.laco2:
-	; 			mov al, 0
-	; 			call writePixel
-	; 			dec dx
-	; 			cmp dx, word[aux_y]
-	; 			jge .laco2
-	; 		dec cx
-	; 		cmp cx, word[aux_x]
-	; 		jge .laco1
-		
-	; pop dx
-	; pop cx
-
 	.nada1:
 	pop bx
+
 	cmp cx, word[limite_esquerda]							;verificando limites da tela
 	jl .skip1												;
 	cmp cx, word[limite_direita]							;
@@ -325,7 +265,7 @@ ball:
 	sub dx, word[ball_Raio]
 	sub dx, word[velocidade]
 
-	mov al, 1
+	mov al, 14
 
 	mov bl, byte[ball_Dia]
 	add bl, byte[velocidade]
@@ -395,11 +335,11 @@ gameControl:
 	mov cx, word[player_PosX]
 	cmp ah, 0x20
 	jne .n1
-	add cx, 4
+	add cx, 8
 	.n1:
 	cmp ah, 0x1e
 	jne .n2
-	sub cx, 4
+	sub cx, 8
 	.n2:
 	call validation
 	ret
@@ -465,6 +405,33 @@ bar:
 		dec bl
 		cmp bl, 0
 		jg .innerloop
+
+	;mov ax, word[player_Color]
+
+	;mov cx, word[player_PosX]
+	;sub cx, 3
+	;mov dx, word[player_PosY]
+	;add dx, 7
+
+	;push bx
+	;call writePixel
+	;inc cx
+	;call writePixel
+	;inc cx
+	;call writePixel
+	;pop bx
+
+	;mov cx, word[player_PosX]
+	;add cx, 31
+
+	;call writePixel
+	;inc cx
+	;call writePixel
+	;inc cx
+	;call writePixel
+
+
+
 	ret
 
 bordas:
@@ -544,35 +511,107 @@ board:
 done:
     jmp $
 
-quantidade dw 2
+quantidade dw 15
 
 atual dw 0
 
 tam dw 10
 
 blocos:
-	dw 20 ;x
+	dw 10 ;x
 	dw 10 ;y
-	dw 10 ;cor
+	dw 4 ;cor
 	dw 10 ;tam
 	dw 1 ;flag
 
 	dw 30
 	dw 10
-	dw 1
+	dw 4
 	dw 10
 	dw 1
 
 	dw 50
 	dw 10
+	dw 4
 	dw 10
+	dw 1
+
+	dw 70
+	dw 10
+	dw 4
+	dw 10
+	dw 1
+
+	dw 90
+	dw 10
+	dw 4
+	dw 10
+	dw 1
+
+	dw 110
+	dw 10
+	dw 4
+	dw 10
+	dw 1
+
+	dw 130
+	dw 10
+	dw 4
+	dw 10
+	dw 1
+
+	dw 150
+	dw 10
+	dw 4
+	dw 10
+	dw 1
+
+	dw 170
+	dw 10
+	dw 4
+	dw 10
+	dw 1
+
+	dw 190
+	dw 10
+	dw 4
+	dw 10
+	dw 1
+
+	dw 210
+	dw 10
+	dw 4
+	dw 10
+	dw 1
+
+	dw 230
+	dw 10
+	dw 4
+	dw 10
+	dw 1
+
+	dw 250
+	dw 10
+	dw 4
+	dw 10
+	dw 1
+
+	dw 270
+	dw 10
+	dw 4
+	dw 10
+	dw 1
+
+	dw 290
+	dw 10
+	dw 4
 	dw 10
 	dw 1
 
 game_flag dw 1
 
 limite_esquerda dw 0
-limite_direita dw 319
+limite_direita dw 320
 limite_cima dw 0
 limite_baixo dw 199
 
@@ -584,18 +623,18 @@ ball_Raio dw 5
 ball_RaioQ dw 0
 ball_PosX dw 159
 ball_PosY dw 172
-velocidade dw 2
+velocidade dw 1
 
 player_PosX dw 144
 player_PosY dw 182
 
 player_TamX db 30
 player_TamY db 8	
-player_Color db 1
-player_Borda db 5
+player_Color db 15
+player_Borda db 11
 
 aux_x dw 0
 aux_y dw 0
 
-times (512 * 2)-($-$$) db 0		
+times (512 * 3)-($-$$) db 0		
 dw 0xaa55			
