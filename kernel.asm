@@ -18,8 +18,70 @@ start:
 	 	call gameControl
 	 	cmp word[game_flag], 1
 	 	je .gameloop
-; 
+
+	 	call PrintPerdeu
 	; jmp done
+
+
+PrintPerdeu:
+	mov si, perdeu
+	mov cl, 23
+
+	PerdeuLoop:
+		lodsb
+
+		mov dl, 0
+		PerdeuLoop2:
+			;Setando o cursor.
+			mov ah, 02h
+			mov bh, 00h
+			mov dh, 07h
+			int 10h
+			
+			push ax
+			mov al, ''
+			mov ah, 0xe
+			mov bh, 0
+			mov bl, 0xf
+			int 10h
+			pop ax
+
+			;Setando o cursor.
+			mov ah, 02h
+			mov bh, 00h
+			mov dh, 07h
+			inc dl
+			int 10h
+
+			mov ah, 0xe
+			mov bh, 0
+			mov bl, 0xf
+			int 10h
+
+			call delay
+
+			cmp dl, cl
+		jne PerdeuLoop2
+		dec cl
+		cmp al, 13
+	jne PerdeuLoop
+ret
+
+delay:
+	push bx
+	push dx
+	mov bp, 50
+	mov dx, 50
+	delayloop:
+		dec bp
+		nop
+		jnz delayloop
+	dec dx
+	jnz delayloop
+
+	pop dx
+	pop bx
+ret
 
 conferir:
 	mov bx, word[quantidade]
@@ -635,6 +697,8 @@ player_Borda db 11
 
 aux_x dw 0
 aux_y dw 0
+
+perdeu db 'UEDREP', 13
 
 times (512 * 3)-($-$$) db 0		
 dw 0xaa55			
